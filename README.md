@@ -2,7 +2,7 @@
 
 ### 实验1
 
-![helloword](assets/https://s3.bmp.ovh/imgs/2022/04/24/2bb00f68688c3dac.jpg)
+![helloword](https://s3.bmp.ovh/imgs/2022/04/24/2bb00f68688c3dac.jpg)
 
 ### 实验2
 
