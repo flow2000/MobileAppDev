@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "MobileAppDev"
+include ':app'
+include ':simplecalculator'
+include ':datatransfer'
+include ':personinfoinput'
+include ':callandsms'
+include ':helloworld'
+include ':schedule'
