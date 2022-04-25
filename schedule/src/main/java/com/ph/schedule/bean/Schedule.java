@@ -19,7 +19,22 @@ public class Schedule {
     /**
      * 课程上课时间
      */
-    private String scheduleTime;
+    private String startTime;
+
+    /**
+     * 课程下课时间
+     */
+    private String endTime;
+
+    /**
+     * 课程开始周数
+     */
+    private Integer startWeek;
+
+    /**
+     * 课程结束周数
+     */
+    private Integer endWeek;
 
     /**
      * 上课地址
@@ -47,12 +62,36 @@ public class Schedule {
         this.scheduleName = scheduleName;
     }
 
-    public String getScheduleTime() {
-        return scheduleTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setScheduleTime(String scheduleTime) {
-        this.scheduleTime = scheduleTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getStartWeek() {
+        return startWeek;
+    }
+
+    public void setStartWeek(Integer startWeek) {
+        this.startWeek = startWeek;
+    }
+
+    public Integer getEndWeek() {
+        return endWeek;
+    }
+
+    public void setEndWeek(Integer endWeek) {
+        this.endWeek = endWeek;
     }
 
     public String getAddress() {
@@ -76,7 +115,10 @@ public class Schedule {
         return "Schedule{" +
                 "scheduleId=" + scheduleId +
                 ", scheduleName='" + scheduleName + '\'' +
-                ", scheduleTime='" + scheduleTime + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", startWeek=" + startWeek +
+                ", endWeek=" + endWeek +
                 ", address='" + address + '\'' +
                 ", teacher='" + teacher + '\'' +
                 '}';

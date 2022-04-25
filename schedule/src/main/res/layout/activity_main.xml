@@ -1,9 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="20dp">
+    tools:context=".MainActivity">
 
+    <FrameLayout
+        android:id="@+id/fl_fragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#bababa">
+        <!-- 存放三个Fragment-->
+    </FrameLayout>
+
+    <!-- 底部的三个选项菜单-->
+    <LinearLayout
+        android:id="@+id/tab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+        <!--三个部分都一样：ImageView + TextView-->
+        <RelativeLayout
+            android:id="@+id/rl_first_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_first_home"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/icon_homepage_selector" />
+
+            <TextView
+                android:id="@+id/tv_first_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_first_home"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:text="今日课表"
+                android:textColor="@drawable/text_selector_color" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_third_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_third_recommend"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/icon_schedule_selector" />
+
+            <TextView
+                android:id="@+id/tv_third_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_third_recommend"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:text="课表"
+                android:textColor="@drawable/text_selector_color" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_four_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_four_mine"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/icon_settings_selector" />
+
+            <TextView
+                android:id="@+id/tv_four_mine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_four_mine"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:text="设置"
+                android:textColor="@drawable/text_selector_color" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

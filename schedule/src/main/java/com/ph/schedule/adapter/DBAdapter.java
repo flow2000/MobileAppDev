@@ -20,7 +20,10 @@ public class DBAdapter {
     // 字段名
     public static final String ID = "schedule_id";
     public static final String NAME = "schedule_name";
-    public static final String TIME = "schedule_time";
+    public static final String START_TIME = "start_time";
+    public static final String END_TIME = "end_time";
+    public static final String START_WEEK = "start_week";
+    public static final String END_WEEK = "end_week";
     public static final String ADDRESS = "address";
     public static final String TEACHER = "teacher";
 
@@ -28,7 +31,10 @@ public class DBAdapter {
     public static final String DB_CREATE = "create table " + DB_TABLE + " (" +
             ID + " integer primary key autoincrement, " +
             NAME + " text not null, " +
-            TIME + " text not null," +
+            START_TIME + " text not null," +
+            END_TIME + " text not null," +
+            START_WEEK + " integer not null," +
+            END_WEEK + " integer not null," +
             ADDRESS + " text not null," +
             TEACHER + " text not null);";
 
@@ -63,20 +69,23 @@ public class DBAdapter {
         System.out.println(DB_CREATE);
         ContentValues scheduleValues = new ContentValues();
         scheduleValues.put(NAME, schedule.getScheduleName());
-        scheduleValues.put(TIME, schedule.getScheduleTime());
+        scheduleValues.put(START_TIME, schedule.getStartTime());
+        scheduleValues.put(END_TIME, schedule.getEndTime());
+        scheduleValues.put(START_WEEK, schedule.getStartWeek());
+        scheduleValues.put(END_WEEK, schedule.getEndWeek());
         scheduleValues.put(ADDRESS, schedule.getAddress());
         scheduleValues.put(TEACHER, schedule.getTeacher());
         return db.insert(DB_TABLE, null, scheduleValues);
     }
 
     public Schedule[] queryAll() {
-        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, TIME, ADDRESS, TEACHER},
+        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
                 null, null, null, null, null);
         return ConvertToBook(results);
     }
 
     public Schedule[] queryOne(long id) {
-        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, TIME, ADDRESS, TEACHER},
+        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
                 ID + "=" + id, null, null, null, null);
         return ConvertToBook(results);
     }
@@ -107,7 +116,10 @@ public class DBAdapter {
         ContentValues scheduleValues = new ContentValues();
         scheduleValues.put(ID, schedule.getScheduleId());
         scheduleValues.put(NAME, schedule.getScheduleName());
-        scheduleValues.put(TIME, schedule.getScheduleTime());
+        scheduleValues.put(START_TIME, schedule.getStartTime());
+        scheduleValues.put(END_TIME, schedule.getEndTime());
+        scheduleValues.put(START_WEEK, schedule.getStartWeek());
+        scheduleValues.put(END_WEEK, schedule.getEndWeek());
         scheduleValues.put(ADDRESS, schedule.getAddress());
         scheduleValues.put(TEACHER, schedule.getTeacher());
         return db.update(DB_TABLE, scheduleValues, ID + "=" + id, null);
