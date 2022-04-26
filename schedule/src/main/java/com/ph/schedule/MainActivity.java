@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout mRlThirdLayout;
     private RelativeLayout mRlFourLayout;
 
-    private LinearLayout tab_menuLayout;
-
     private ImageView mIvFirstHome;
     private TextView mTvFirstHome;
     private ImageView mIvThirdRecommend;
@@ -43,15 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFragmentManager = getSupportFragmentManager();
-
-        //=============================沉侵式状态栏S================================
-        //设置状态栏颜色,必须在setContentView之后使用
-        //第一个参数:当前页面;第二个参数:颜色;第三个参数:透明度;
-        //StatusBarUtil.setColor(this, getResources().getColor(R.color.colorStatusBar), 0);
-        //=============================沉侵式状态栏E================================
-
-        initView();     //初始化视图
-        adaptiveScreen();
+        initView(); // 初始化视图
     }
 
     private void initView() {
@@ -65,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRlFourLayout = (RelativeLayout) findViewById(R.id.rl_four_layout);
         mIvFourMine = (ImageView) findViewById(R.id.iv_four_mine);
         mTvFourMine = (TextView) findViewById(R.id.tv_four_mine);
-        tab_menuLayout = findViewById(R.id.tab_menu);
+
         //给五个按钮设置监听器
         mRlFirstLayout.setOnClickListener(this);
         mRlThirdLayout.setOnClickListener(this);
@@ -77,26 +67,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTransaction.commit();
     }
 
-    /**
-     * 自适应屏幕
-     */
-    private void adaptiveScreen() {
-        View v = findViewById(R.id.tab_menu);
-        int height1 = WidgetController.getHeight(v);
-        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) v.getLayoutParams();
-        ll.height = height / 15;
-        v.setLayoutParams(ll);
-        v.requestLayout();
-    }
-
     @Override
     public void onClick(View v) {
         mTransaction = mFragmentManager.beginTransaction(); //开启事务
         hideAllFragment(mTransaction);
         switch (v.getId()) {
-            //首页
+            //今日课程
             case R.id.rl_first_layout:
                 selected();
                 mRlFirstLayout.setSelected(true);
@@ -107,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mTransaction.show(mHomePageFragment);
                 }
                 break;
-            //推荐
+            //课表
             case R.id.rl_third_layout:
                 selected();
                 mRlThirdLayout.setSelected(true);
@@ -118,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mTransaction.show(mSchedulePageFragment);
                 }
                 break;
-            //个人中心
+            //设置
             case R.id.rl_four_layout:
                 selected();
                 mRlFourLayout.setSelected(true);

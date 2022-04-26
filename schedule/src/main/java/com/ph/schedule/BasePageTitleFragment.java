@@ -1,18 +1,21 @@
 package com.ph.schedule;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public abstract class BasePageTitleFragent extends Fragment {
+public abstract class BasePageTitleFragment extends Fragment {
     private View mFragmentView;//父控件(由父控件找到子控件)
     private ImageView mIvLogoPage;
     private TextView mTvTitlePage;
@@ -35,7 +38,9 @@ public abstract class BasePageTitleFragent extends Fragment {
         return mFragmentView;
     }
 
-    public void setTitleIcon(String msg, boolean show) {    //设置标题和图标
+    public void setTitleIcon(String msg, boolean show, String color) {    //设置标题和图标
+        RelativeLayout layout = mFragmentView.findViewById(R.id.topView);
+        layout.setBackgroundColor(Color.parseColor(color));
         mTvTitlePage.setText(msg);  //设置标题
         mTvTitlePage.setVisibility(show ? View.VISIBLE : View.GONE);     //设置标题显示  true就是显示  false就是不显示
     }

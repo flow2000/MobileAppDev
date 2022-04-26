@@ -44,7 +44,7 @@
                 android:layout_below="@+id/iv_first_home"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:text="今日课表"
+                android:text="今日课程"
                 android:textColor="@drawable/text_selector_color" />
         </RelativeLayout>
 

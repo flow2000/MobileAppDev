@@ -4,6 +4,7 @@ android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent">
 <!--包含标题栏:图标+文字-->
 <RelativeLayout
+    android:id="@+id/topView"
     android:layout_width="match_parent"
     android:background="#FFFFFF"
     android:layout_height="50dp">
