@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/comeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="今天也要加油哦"
@@ -35,12 +36,13 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="900dp"
+        android:gravity="fill_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="fill_horizontal"
-        android:orientation="horizontal">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
         <ListView
             android:id="@+id/my_list"
             android:layout_width="match_parent"
@@ -49,9 +51,6 @@
             android:background="@drawable/shape_round_corner" />
 
     </LinearLayout>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

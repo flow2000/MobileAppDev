@@ -1,0 +1,22 @@
+[
+  {
+    "scheduleId": 1,
+    "scheduleName": "专业英语",
+    "startTime": "08:00",
+    "endTime": "09:40",
+    "startWeek": 1,
+    "endWeek": 11,
+    "address": "学友楼401",
+    "teacher": "刘美玲"
+  },
+  {
+    "scheduleId": 2,
+    "scheduleName": "软件测试",
+    "startTime": "10:00",
+    "endTime": "11:40",
+    "startWeek": 2,
+    "endWeek": 16,
+    "address": "学友楼402",
+    "teacher": "张纲强"
+  }
+]

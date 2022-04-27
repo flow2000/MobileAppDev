@@ -1,7 +1,10 @@
 package com.ph.schedule;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -9,10 +12,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.gson.Gson;
+import com.ph.schedule.adapter.DBAdapter;
+import com.ph.schedule.bean.Schedule;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //初始化fragment
@@ -36,12 +49,78 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTransaction;
 
+    private DBAdapter dbAdapter;
+    private ArrayList<Schedule> scheduleList;
+
+    private static Integer currentWeek = 1;
+    private static Integer weekCount = 20;
+    private static String startTime = "3/11";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFragmentManager = getSupportFragmentManager();
         initView(); // 初始化视图
+        readConfig(); // 读取配置
+        readJsonData(); // 读取json数据
+        readSQLite(); // 读取数据库数据
+    }
+
+    /**
+     * 读取SharedPreferences持久化的数据
+     */
+    private void readConfig() {
+        SharedPreferences pref = getSharedPreferences("schedule", MODE_PRIVATE);
+        String str1 = pref.getString("currentWeek", null);
+        String str2 = pref.getString("weekCount", null);
+        String str3 = pref.getString("startTime", null);
+        if (str1 != null && str2 != null && str3 != null) {
+            currentWeek = Integer.parseInt(str1);
+            weekCount = Integer.parseInt(str1);
+            startTime = str3;
+        }
+    }
+
+    /**
+     * 读取json数据
+     */
+    private void readJsonData() {
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
+        String JsonData = JsonDataUtil.getJson(this, "schedule.json");//获取assets目录下的json文件数据
+        scheduleList = new ArrayList<>();
+        try {
+            JSONArray data = new JSONArray(JsonData);
+            Gson gson = new Gson();
+            for (int i = 0; i < data.length(); i++) {
+                Schedule entity = gson.fromJson(data.optJSONObject(i).toString(), Schedule.class);
+                scheduleList.add(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showMsg("读取json数据出错");
+        }
+
+        for (int i = 0; i < scheduleList.size(); i++) {
+            Schedule schedule = scheduleList.get(i);
+            Schedule[] schedules = dbAdapter.queryOne(schedule.getScheduleId());
+            if (schedules == null) {
+                dbAdapter.insert(schedule);
+            }
+        }
+    }
+
+    /**
+     * 读取数据库数据
+     */
+    private void readSQLite() {
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
+        Schedule[] schedules = dbAdapter.queryAll();
+        for (int i = 0; i < schedules.length; i++) {
+            scheduleList.add(schedules[i]);
+        }
     }
 
     private void initView() {
@@ -88,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 selected();
                 mRlThirdLayout.setSelected(true);
                 if (mSchedulePageFragment == null) {
-                    mSchedulePageFragment = new SchedulePageFragment();
+                    mSchedulePageFragment = new SchedulePageFragment(currentWeek, weekCount, startTime);
                     mTransaction.add(R.id.fl_fragment_content, mSchedulePageFragment);    //通过事务将内容添加到内容页
                 } else {
                     mTransaction.show(mSchedulePageFragment);
@@ -99,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 selected();
                 mRlFourLayout.setSelected(true);
                 if (mSettingsPageFragment == null) {
-                    mSettingsPageFragment = new SettingsPageFragment();
+                    mSettingsPageFragment = new SettingsPageFragment(currentWeek, weekCount, startTime);
                     mTransaction.add(R.id.fl_fragment_content, mSettingsPageFragment);    //通过事务将内容添加到内容页
                 } else {
                     mTransaction.show(mSettingsPageFragment);
@@ -127,5 +206,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mSettingsPageFragment != null) {
             transaction.hide(mSettingsPageFragment);
         }
+    }
+
+    /**
+     * Toast提示
+     *
+     * @param msg 内容
+     */
+    private void showMsg(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

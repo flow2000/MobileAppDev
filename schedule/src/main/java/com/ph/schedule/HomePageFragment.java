@@ -19,6 +19,7 @@ public class HomePageFragment extends BasePageTitleFragment {
     private SimpleAdapter simpleAdapter;
     private View mFragmentView;//父控件(由父控件找到子控件)
     private TextView topDateView;
+    private TextView topTextView;
     private static final int[] viewId = {R.id.schedule_start_time, R.id.schedule_end_time, R.id.schedule_name, R.id.schedule_detail, R.id.schedule_status};
     private static final String[] dataName = {"start_time", "end_time", "title", "detail", "status"};
     private static final String[] title = {"日", "一", "二", "三", "四", "五", "六", ""};
@@ -37,12 +38,14 @@ public class HomePageFragment extends BasePageTitleFragment {
 
     private void setData() {
         topDateView = mFragmentView.findViewById(R.id.timeText);
+        topTextView = mFragmentView.findViewById(R.id.comeText);
         Calendar calendar = Calendar.getInstance();
         int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DATE);
         String str = month + "月" + day + "日 星期" + title[week];
         topDateView.setText(str);
+        topTextView.setText("今天也要加油哦");
     }
 
     @Override

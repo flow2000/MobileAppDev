@@ -1,15 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/tv_homepage_content"
-        android:text="推荐片段xml"
-        android:textSize="29sp"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+    <GridLayout
+        android:id="@+id/gridLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="8"
+        android:rowCount="14">
+
+        <TextView
+            android:id="@+id/monday"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="周一\n4/25"
+            android:textColor="#4C4C4C"
+            android:textSize="10dp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            />
+
+        <TextView
+            android:id="@+id/tuesday"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:text="周二\n4/25"
+            android:textColor="#4C4C4C"
+            android:textSize="10dp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"/>
+
+        <TextView
+            android:id="@+id/wednesday"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:text="周三\n4/25"
+            android:textColor="#4C93DA"
+            android:textSize="10dp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"/>
+
+        <TextView
+            android:id="@+id/thursday"
+            android:layout_row="0"
+            android:layout_column="4"
+            android:text="周四\n4/25"
+            android:textColor="#4C4C4C"
+            android:textSize="10dp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"/>
+
+        <TextView
+            android:id="@+id/friday"
+            android:layout_row="0"
+            android:layout_column="5"
+            android:text="周五\n4/25"
+            android:textColor="#4C4C4C"
+            android:textSize="10dp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"/>
+
+        <TextView
+            android:id="@+id/saturday"
+            android:layout_row="0"
+            android:layout_column="6"
+            android:text="周六\n4/25"
+            android:textColor="#4C4C4C"
+            android:textSize="10dp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"/>
+
+        <TextView
+            android:id="@+id/sunday"
+            android:layout_row="0"
+            android:layout_column="7"
+            android:text="周日\n4/25"
+            android:textColor="#4C4C4C"
+            android:textSize="10dp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"/>
+
+        <TextView
+            android:id="@+id/class1"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="1\n08:00\n08:45"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/class2"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:text="2\n08:55\n09:40"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/class3"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:text="3\n10:00\n10:45"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+        <TextView
+            android:id="@+id/class4"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:text="4\n10:55\n11:40"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/rest1"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_columnSpan="8"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:text="午休"
+            android:textColor="#C6C6C6"
+            android:background="#F6F6F6" />
+
+        <TextView
+            android:id="@+id/class5"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:text="5\n14:30\n15:15"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/class6"
+            android:layout_row="7"
+            android:layout_column="0"
+            android:text="6\n15:20\n16:05"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/class7"
+            android:layout_row="8"
+            android:layout_column="0"
+            android:text="7\n16:25\n17:10"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/class8"
+            android:layout_row="9"
+            android:layout_column="0"
+            android:text="8\n17:15\n18:00"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/rest2"
+            android:layout_row="10"
+            android:layout_column="0"
+            android:layout_columnSpan="8"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:text="晚休"
+            android:textColor="#C6C6C6"
+            android:background="#F6F6F6" />
+
+        <TextView
+            android:id="@+id/class9"
+            android:layout_row="11"
+            android:layout_column="0"
+            android:text="9\n19:40\n20:25"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/class10"
+            android:layout_row="12"
+            android:layout_column="0"
+            android:text="10\n20:35\n21:20"
+            android:textColor="#4C4C4C"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:padding="5dp" />
+
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="13"
+            android:layout_column="7"
+            android:background="@drawable/icon_add" />
+    </GridLayout>
+
+</ScrollView >

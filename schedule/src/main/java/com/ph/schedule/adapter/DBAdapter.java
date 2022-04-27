@@ -81,16 +81,16 @@ public class DBAdapter {
     public Schedule[] queryAll() {
         Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
                 null, null, null, null, null);
-        return ConvertToBook(results);
+        return ConvertToSchedule(results);
     }
 
-    public Schedule[] queryOne(long id) {
+    public Schedule[] queryOne(Long id) {
         Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
                 ID + "=" + id, null, null, null, null);
-        return ConvertToBook(results);
+        return ConvertToSchedule(results);
     }
 
-    private Schedule[] ConvertToBook(Cursor cursor) {
+    private Schedule[] ConvertToSchedule(Cursor cursor) {
         int resultCounts = cursor.getCount();
         if (resultCounts == 0 || !cursor.moveToFirst()) {
             return null;
