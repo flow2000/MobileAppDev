@@ -9,12 +9,17 @@ public class Schedule {
     /**
      * 课程id
      */
-    private Long scheduleId = -1L;;
+    private Long scheduleId = -1L;
 
     /**
      * 课程名称
      */
     private String scheduleName;
+
+    /**
+     * 星期几
+     */
+    private Integer scheduleWeek;
 
     /**
      * 课程上课时间
@@ -60,6 +65,14 @@ public class Schedule {
 
     public void setScheduleName(String scheduleName) {
         this.scheduleName = scheduleName;
+    }
+
+    public Integer getScheduleWeek() {
+        return scheduleWeek;
+    }
+
+    public void setScheduleWeek(Integer scheduleWeek) {
+        this.scheduleWeek = scheduleWeek;
     }
 
     public String getStartTime() {
@@ -115,6 +128,7 @@ public class Schedule {
         return "Schedule{" +
                 "scheduleId=" + scheduleId +
                 ", scheduleName='" + scheduleName + '\'' +
+                ", scheduleWeek='" + scheduleWeek + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", startWeek=" + startWeek +

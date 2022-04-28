@@ -1,9 +1,11 @@
-package com.ph.schedule;
+package com.ph.schedule.fragment;
 
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.view.View;
+
+import com.ph.schedule.R;
 
 public class SettingsPageFragment extends BasePageTitleFragment {
 

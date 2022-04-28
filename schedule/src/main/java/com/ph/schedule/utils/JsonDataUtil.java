@@ -1,4 +1,4 @@
-package com.ph.schedule;
+package com.ph.schedule.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;

@@ -1,5 +1,6 @@
 package com.ph.schedule.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ public class DBAdapter {
     // 字段名
     public static final String ID = "schedule_id";
     public static final String NAME = "schedule_name";
+    public static final String WEEK = "schedule_week";
     public static final String START_TIME = "start_time";
     public static final String END_TIME = "end_time";
     public static final String START_WEEK = "start_week";
@@ -31,6 +33,7 @@ public class DBAdapter {
     public static final String DB_CREATE = "create table " + DB_TABLE + " (" +
             ID + " integer primary key autoincrement, " +
             NAME + " text not null, " +
+            WEEK + " integer not null, " +
             START_TIME + " text not null," +
             END_TIME + " text not null," +
             START_WEEK + " integer not null," +
@@ -69,6 +72,7 @@ public class DBAdapter {
         System.out.println(DB_CREATE);
         ContentValues scheduleValues = new ContentValues();
         scheduleValues.put(NAME, schedule.getScheduleName());
+        scheduleValues.put(WEEK, schedule.getScheduleWeek());
         scheduleValues.put(START_TIME, schedule.getStartTime());
         scheduleValues.put(END_TIME, schedule.getEndTime());
         scheduleValues.put(START_WEEK, schedule.getStartWeek());
@@ -79,17 +83,18 @@ public class DBAdapter {
     }
 
     public Schedule[] queryAll() {
-        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
+        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, WEEK, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
                 null, null, null, null, null);
         return ConvertToSchedule(results);
     }
 
     public Schedule[] queryOne(Long id) {
-        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
+        Cursor results = db.query(DB_TABLE, new String[]{ID, NAME, WEEK, START_TIME, END_TIME, START_WEEK, END_WEEK, ADDRESS, TEACHER},
                 ID + "=" + id, null, null, null, null);
         return ConvertToSchedule(results);
     }
 
+    @SuppressLint("Range")
     private Schedule[] ConvertToSchedule(Cursor cursor) {
         int resultCounts = cursor.getCount();
         if (resultCounts == 0 || !cursor.moveToFirst()) {
@@ -98,7 +103,15 @@ public class DBAdapter {
         Schedule[] scheduleList = new Schedule[resultCounts];
         for (int i = 0; i < resultCounts; i++) {
             scheduleList[i] = new Schedule();
-
+            scheduleList[i].setScheduleId(cursor.getLong(0));
+            scheduleList[i].setScheduleName(cursor.getString(cursor.getColumnIndex(NAME)));
+            scheduleList[i].setScheduleWeek(cursor.getInt(cursor.getColumnIndex(WEEK)));
+            scheduleList[i].setStartTime(cursor.getString(cursor.getColumnIndex(START_TIME)));
+            scheduleList[i].setEndTime(cursor.getString(cursor.getColumnIndex(END_TIME)));
+            scheduleList[i].setStartWeek(cursor.getInt(cursor.getColumnIndex(START_WEEK)));
+            scheduleList[i].setEndWeek(cursor.getInt(cursor.getColumnIndex(END_WEEK)));
+            scheduleList[i].setAddress(cursor.getString(cursor.getColumnIndex(ADDRESS)));
+            scheduleList[i].setTeacher(cursor.getString(cursor.getColumnIndex(TEACHER)));
             cursor.moveToNext();
         }
         return scheduleList;
@@ -116,6 +129,7 @@ public class DBAdapter {
         ContentValues scheduleValues = new ContentValues();
         scheduleValues.put(ID, schedule.getScheduleId());
         scheduleValues.put(NAME, schedule.getScheduleName());
+        scheduleValues.put(WEEK, schedule.getScheduleWeek());
         scheduleValues.put(START_TIME, schedule.getStartTime());
         scheduleValues.put(END_TIME, schedule.getEndTime());
         scheduleValues.put(START_WEEK, schedule.getStartWeek());

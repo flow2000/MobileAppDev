@@ -1,4 +1,4 @@
-package com.ph.schedule;
+package com.ph.schedule.fragment;
 
 
 import android.graphics.Color;
@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.ph.schedule.R;
 
 public abstract class BasePageTitleFragment extends Fragment {
     private View mFragmentView;//父控件(由父控件找到子控件)

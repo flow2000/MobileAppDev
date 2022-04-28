@@ -1,22 +1,123 @@
 [
   {
     "scheduleId": 1,
-    "scheduleName": "专业英语",
-    "startTime": "08:00",
-    "endTime": "09:40",
+    "scheduleName": "移动软件开发",
+    "scheduleWeek": 1,
+    "startTime": "14:30",
+    "endTime": "16:05",
     "startWeek": 1,
-    "endWeek": 11,
-    "address": "学友楼401",
-    "teacher": "刘美玲"
+    "endWeek": 15,
+    "address": "学友楼402",
+    "teacher": "周卫"
   },
   {
     "scheduleId": 2,
+    "scheduleName": "专业英语",
+    "scheduleWeek": 2,
+    "startTime": "08:00",
+    "endTime": "10:00",
+    "startWeek": 1,
+    "endWeek": 10,
+    "address": "学友楼402",
+    "teacher": "刘美玲"
+  },
+  {
+    "scheduleId": 3,
     "scheduleName": "软件测试",
+    "scheduleWeek": 2,
     "startTime": "10:00",
     "endTime": "11:40",
-    "startWeek": 2,
-    "endWeek": 16,
+    "startWeek": 1,
+    "endWeek": 15,
+    "address": "学友楼401",
+    "teacher": "张纲强"
+  },
+  {
+    "scheduleId": 4,
+    "scheduleName": "计算机操作系统",
+    "scheduleWeek": 3,
+    "startTime": "08:00",
+    "endTime": "09:40",
+    "startWeek": 1,
+    "endWeek": 15,
     "address": "学友楼402",
+    "teacher": "王哲"
+  },
+  {
+    "scheduleId": 5,
+    "scheduleName": "大学生就业指导",
+    "scheduleWeek": 3,
+    "startTime": "10:00",
+    "endTime": "11:40",
+    "startWeek": 6,
+    "endWeek": 13,
+    "address": "学友楼104",
+    "teacher": "邬佳颖"
+  },
+  {
+    "scheduleId": 6,
+    "scheduleName": "软件测试",
+    "scheduleWeek": 3,
+    "startTime": "14:30",
+    "endTime": "16:06",
+    "startWeek": 1,
+    "endWeek": 11,
+    "address": "逸夫楼607",
+    "teacher": "张纲强"
+  },
+  {
+    "scheduleId": 7,
+    "scheduleName": "计算机操作系统",
+    "scheduleWeek": 4,
+    "startTime": "08:00",
+    "endTime": "09:40",
+    "startWeek": 2,
+    "endWeek": 15,
+    "address": "博达楼112",
+    "teacher": "王哲"
+  },
+  {
+    "scheduleId": 8,
+    "scheduleName": "专业英语",
+    "scheduleWeek": 4,
+    "startTime": "10:00",
+    "endTime": "11:40",
+    "startWeek": 1,
+    "endWeek": 10,
+    "address": "学友楼402",
+    "teacher": "刘美玲"
+  },
+  {
+    "scheduleId": 9,
+    "scheduleName": "软件设计模式",
+    "scheduleWeek": 4,
+    "startTime": "16:25",
+    "endTime": "18:00",
+    "startWeek": 1,
+    "endWeek": 7,
+    "address": "逸夫楼607",
+    "teacher": "张纲强"
+  },
+  {
+    "scheduleId": 10,
+    "scheduleName": "移动软件开发",
+    "scheduleWeek": 5,
+    "startTime": "10:00",
+    "endTime": "11:40",
+    "startWeek": 1,
+    "endWeek": 15,
+    "address": "逸夫楼604",
+    "teacher": "周卫"
+  },
+  {
+    "scheduleId": 11,
+    "scheduleName": "软件设计模式",
+    "scheduleWeek": 5,
+    "startTime": "14:30",
+    "endTime": "16:05",
+    "startWeek": 1,
+    "endWeek": 13,
+    "address": "逸夫楼607",
     "teacher": "张纲强"
   }
 ]

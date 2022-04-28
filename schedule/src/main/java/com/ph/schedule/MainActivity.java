@@ -1,33 +1,32 @@
 package com.ph.schedule;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
 import com.ph.schedule.adapter.DBAdapter;
 import com.ph.schedule.bean.Schedule;
+import com.ph.schedule.fragment.HomePageFragment;
+import com.ph.schedule.fragment.SchedulePageFragment;
+import com.ph.schedule.fragment.SettingsPageFragment;
+import com.ph.schedule.utils.JsonDataUtil;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
     //初始化fragment
     private HomePageFragment mHomePageFragment;
     private SchedulePageFragment mSchedulePageFragment;
@@ -56,11 +55,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Integer weekCount = 20;
     private static String startTime = "3/11";
 
+    private static Context instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFragmentManager = getSupportFragmentManager();
+        instance = getApplicationContext();
         initView(); // 初始化视图
         readConfig(); // 读取配置
         readJsonData(); // 读取json数据
@@ -155,34 +157,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rl_first_layout:
                 selected();
                 mRlFirstLayout.setSelected(true);
-                if (mHomePageFragment == null) {
-                    mHomePageFragment = new HomePageFragment();
-                    mTransaction.add(R.id.fl_fragment_content, mHomePageFragment);    //通过事务将内容添加到内容页
-                } else {
-                    mTransaction.show(mHomePageFragment);
-                }
+                mHomePageFragment = new HomePageFragment();
+                mTransaction.add(R.id.fl_fragment_content, mHomePageFragment);    //通过事务将内容添加到内容页
                 break;
             //课表
             case R.id.rl_third_layout:
                 selected();
                 mRlThirdLayout.setSelected(true);
-                if (mSchedulePageFragment == null) {
-                    mSchedulePageFragment = new SchedulePageFragment(currentWeek, weekCount, startTime);
-                    mTransaction.add(R.id.fl_fragment_content, mSchedulePageFragment);    //通过事务将内容添加到内容页
-                } else {
-                    mTransaction.show(mSchedulePageFragment);
-                }
+                mSchedulePageFragment = new SchedulePageFragment(currentWeek, weekCount, startTime);
+                mTransaction.add(R.id.fl_fragment_content, mSchedulePageFragment);    //通过事务将内容添加到内容页
                 break;
             //设置
             case R.id.rl_four_layout:
                 selected();
                 mRlFourLayout.setSelected(true);
-                if (mSettingsPageFragment == null) {
-                    mSettingsPageFragment = new SettingsPageFragment(currentWeek, weekCount, startTime);
-                    mTransaction.add(R.id.fl_fragment_content, mSettingsPageFragment);    //通过事务将内容添加到内容页
-                } else {
-                    mTransaction.show(mSettingsPageFragment);
-                }
+                mSettingsPageFragment = new SettingsPageFragment(currentWeek, weekCount, startTime);
+                mTransaction.add(R.id.fl_fragment_content, mSettingsPageFragment);    //通过事务将内容添加到内容页
                 break;
         }
         mTransaction.commit();
