@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.ph.schedule.R;
 import com.ph.schedule.adapter.CurrentScheduleAdapter;
+import com.ph.schedule.adapter.DBAdapter;
+import com.ph.schedule.bean.Schedule;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,10 +26,19 @@ public class HomePageFragment extends BasePageTitleFragment {
     private static final int[] viewId = {R.id.schedule_start_time, R.id.schedule_end_time, R.id.schedule_name, R.id.schedule_detail, R.id.schedule_status};
     private static final String[] dataName = {"start_time", "end_time", "title", "detail", "status"};
     private static final String[] title = {"日", "一", "二", "三", "四", "五", "六", ""};
+    private static final Map<String, String> timesMap = new HashMap<String, String>() {{
+        put("08:00", "第1-2节");
+        put("10:00", "第3-4节");
+        put("14:30", "第5-6节");
+        put("16:25", "第7-8节");
+        put("19:40", "第9-10节");
+    }};
+    private DBAdapter dbAdapter;
 
     @Override
     protected View initView() {
-        setTitleIcon("", true,"#2ABFFD");
+        dbAdapter = new DBAdapter(getActivity());
+        dbAdapter.open();
         mFragmentView = View.inflate(getContext(), R.layout.fg_homepage, null);
         setData();
         listView = mFragmentView.findViewById(R.id.my_list);
@@ -37,7 +48,11 @@ public class HomePageFragment extends BasePageTitleFragment {
         return mFragmentView;
     }
 
+    /**
+     * 设置数据
+     */
     private void setData() {
+        setTitleIcon("", true, "#2ABFFD");
         topDateView = mFragmentView.findViewById(R.id.timeText);
         topTextView = mFragmentView.findViewById(R.id.comeText);
         Calendar calendar = Calendar.getInstance();
@@ -54,20 +69,27 @@ public class HomePageFragment extends BasePageTitleFragment {
 
     }
 
+    /**
+     * 获取今日课表数据数据
+     * @return List<Map<String,Object>
+     */
     private List<Map<String, Object>> getData() {
-        String[] startTimes = {"08:00", "10:00", "14:30", "16:25"};
-        String[] endTimes = {"09:40", "11:40", "16:05", "18:00"};
-        String[] titles = {"专业英语", "专业英语", "专业英语", "专业英语"};
-        String[] details = {"第3-4节 学友楼401 刘美玲", "第3-4节 学友楼401 刘美玲", "第3-4节 学友楼401 刘美玲", "第3-4节 学友楼401 刘美玲"};
+        Calendar calendar = Calendar.getInstance();
+        int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         List<Map<String, Object>> list = new ArrayList<>();
-        for (int i = 0; i < startTimes.length; i++) {
-            Map map = new HashMap();
-            map.put("start_time", startTimes[i]);
-            map.put("end_time", endTimes[i]);
-            map.put("title", titles[i]);
-            map.put("detail", details[i]);
-            map.put("status", "未开始");
-            list.add(map);
+        if (dbAdapter != null) {
+            Schedule[] schedules = dbAdapter.queryAll();
+            for (Schedule s : schedules) {
+                if (s.getScheduleWeek() == week) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("start_time", s.getStartTime());
+                    map.put("end_time", s.getEndTime());
+                    map.put("title", s.getScheduleName());
+                    map.put("detail", timesMap.get(s.getStartTime()) + " " + s.getAddress() + " " + s.getTeacher());
+                    map.put("status", "未开始");
+                    list.add(map);
+                }
+            }
         }
         return list;
     }

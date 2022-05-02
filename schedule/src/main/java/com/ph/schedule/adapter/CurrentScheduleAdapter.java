@@ -33,7 +33,6 @@ public class CurrentScheduleAdapter extends SimpleAdapter {
     private Date now_time;
     private Date target_time;
 
-
     /**
      * 参数分别为：
      * 上下文context，数据集 data，ListView，from，new int[]{ R.id.itemTitle,R.id.itemText}

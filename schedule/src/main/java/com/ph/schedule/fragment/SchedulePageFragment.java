@@ -3,15 +3,15 @@ package com.ph.schedule.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -23,7 +23,9 @@ import com.ph.schedule.bean.Schedule;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SchedulePageFragment extends BasePageTitleFragment {
 
@@ -37,9 +39,16 @@ public class SchedulePageFragment extends BasePageTitleFragment {
 
     private final int[] dates = {0, R.id.monday, R.id.tuesday, R.id.wednesday, R.id.thursday, R.id.friday, R.id.saturday, R.id.sunday};
     private final String[] weeks = {"", "周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-    private final String[] startTimes = {"", "08:00", "08:55", "10:00", "10:55", "14:30", "15:20", "16:25", "17:15", "19:40", "20:35"};
+    private final String[] startTimes = {"", "08:00", "08:55", "10:00", "10:55", "", "14:30", "15:20", "16:25", "17:15", "19:40", "20:35", ""};
     private String[] endTimes = {"", "08:45", "09:40", "10:45", "11:40", "15:15", "16:05", "17:10", "18:00", "20:25", "21:20"};
     private String[] start = {"08:00", "10:00", "14:30", "16:25", "19:40"};
+    private static final Map<String, String> timesMap = new HashMap<String, String>() {{
+        put("08:00", "第1-2节");
+        put("10:00", "第3-4节");
+        put("14:30", "第5-6节");
+        put("16:25", "第7-8节");
+        put("19:40", "第9-10节");
+    }};
 
     private int[][] classes = {
             new int[]{0, 0, 0, 0, 0, 0, 0, 0},
@@ -50,12 +59,18 @@ public class SchedulePageFragment extends BasePageTitleFragment {
             new int[]{0, R.id.c5, R.id.c10, R.id.c15, R.id.c20, R.id.c25, R.id.c30, R.id.c35}
     };
 
+    private static boolean isOnlyAdd = false;
+    private static int currentId = 0;
+    private static int lastId = 0;
+
     private static final String[] colorPool = new String[]{
             "#03A5EF", "#E6F4FF", "#3CB3C9", "#DEFBF7", "#7D7CE1", "#EEEDFF", "#FC6B50", "#FCEADC", "#ED5A74", "#FFEFF0"
     };
 
     private DBAdapter dbAdapter;
     private List<Schedule> scheduleList = new ArrayList<>();
+    private static TextView textView = null;
+    private GridLayout gridLayout;
 
     public SchedulePageFragment(Integer currentWeek, Integer weekCount, String startTime) {
         super();
@@ -71,10 +86,16 @@ public class SchedulePageFragment extends BasePageTitleFragment {
         dbAdapter.open();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        setSchedule(); // 设置课程
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public View initView() {
-        mFragmentView = View.inflate(getContext(), R.layout.fg_schedulepage, null);
+        mFragmentView = View.inflate(getActivity(), R.layout.fg_schedulepage, null);
         setSchedule(); // 设置课程
         return mFragmentView;
     }
@@ -82,13 +103,14 @@ public class SchedulePageFragment extends BasePageTitleFragment {
     /**
      * 设置课程
      */
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     private void setSchedule() {
         setData();
         setDate();
         setWeek();
-        GridLayout gridLayout = mFragmentView.findViewById(R.id.gridLayoutId);
-        int columnCount = gridLayout.getColumnCount() - 1;
-        int rowCount = gridLayout.getRowCount() - 1;
+        gridLayout = mFragmentView.findViewById(R.id.gridLayoutId);
+        int columnCount = gridLayout.getColumnCount();
+        int rowCount = gridLayout.getRowCount() - 3;
         int index = 0;
         for (int i = 1; i < rowCount; i++) {
             for (int j = 1; j < columnCount; j++) {
@@ -107,19 +129,87 @@ public class SchedulePageFragment extends BasePageTitleFragment {
                             }
                             r++;
                         }
-                        TextView textView = gridLayout.findViewById(classes[r][j]);
-                        String str = s.getScheduleName() + "\n" + s.getAddress() + "\n" + s.getTeacher();
-                        textView.setText(str);
+                        textView = gridLayout.findViewById(classes[r][j]);
+                        textView.setText(s.getScheduleName() + "\n" + s.getAddress() + "\n" + s.getTeacher());
                         textView.setTextColor(Color.parseColor(colorPool[index++]));
                         textView.setBackgroundColor(Color.parseColor(colorPool[index++]));
+                        textView.setOnLongClickListener(view -> {
+                            AlertDialog dialog = createDialog(s);
+                            dialog.show();
+                            return false;
+                        });
+                        textView.setOnClickListener(view -> {
+                            AlertDialog dialog = createDialog(s);
+                            dialog.show();
+                        });
                         if (index >= colorPool.length - 1) {
                             index = 0;
                         }
                         scheduleList.remove(k--);
+                    } else {
+                        try {
+                            currentId = classes[i][j];
+                        } catch (Exception e) {
+                            continue;
+                        }
+                        textView = gridLayout.findViewById(currentId);
+                        textView.setOnClickListener(view -> {
+                            if (view.getId() != lastId) {
+                                textView = gridLayout.findViewById(view.getId());
+                                textView.setText("+");
+                                textView.setTextSize(50);
+                                textView.setTextColor(Color.parseColor("#BDBDBD"));
+                                textView.setPadding(15, 20, 20, 20);
+                                textView.setBackgroundColor(Color.parseColor("#F6F6F6"));
+                                if (lastId != 0) {
+                                    setTransparent(lastId);
+                                }
+                                lastId = view.getId();
+                            } else {
+                                Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
+                                intent.putExtra("schedule", s.toString());
+                                startActivityForResult(intent, ADD_CODE);
+                                setTransparent(view.getId());
+                            }
+                        });
                     }
                 }
             }
         }
+    }
+
+    /**
+     * 设置格子透明
+     *
+     * @param id 视图id
+     */
+    private void setTransparent(int id) {
+        textView = gridLayout.findViewById(id);
+        textView.setTextColor(Color.parseColor("#FFFFFF"));
+        textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+    }
+
+    /**
+     * 创建弹窗
+     *
+     * @param s 课程对象
+     * @return 弹窗对象
+     */
+    private AlertDialog createDialog(Schedule s) {
+        String str = s.getStartWeek() + "-" + s.getEndWeek() + " | " +
+                timesMap.get(s.getStartTime()) + " " + s.getStartTime() + "-" + s.getEndTime()
+                + "\n" + s.getAddress() + " | " + s.getTeacher();
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(s.getScheduleName())//标题
+                .setMessage(str)//内容
+                .setPositiveButton("编辑", (dialog, which) -> {
+                    Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
+                    intent.putExtra("schedule", s.toString());
+                    startActivityForResult(intent, ADD_CODE);
+                })
+                .setNegativeButton("关闭", (dialog, which) -> {
+                })
+                .create();
     }
 
     /**
@@ -164,16 +254,6 @@ public class SchedulePageFragment extends BasePageTitleFragment {
         }
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ImageView image_add = mFragmentView.findViewById(R.id.add);
-        image_add.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
-            startActivityForResult(intent, ADD_CODE);
-        });
-    }
-
     /**
      * 返回Activity结果
      *
@@ -184,6 +264,8 @@ public class SchedulePageFragment extends BasePageTitleFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Intent intent = getActivity().getIntent();
+        String json = intent.getStringExtra("schedule");
         setSchedule();
     }
 
@@ -193,16 +275,12 @@ public class SchedulePageFragment extends BasePageTitleFragment {
     private static Long[] getTimeInterval(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        // 判断要计算的日期是否是周日，如果是则减一天计算周六的，否则会出问题，计算到下一周去了
-        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
+        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);
         if (1 == dayWeek) {
             cal.add(Calendar.DAY_OF_MONTH, -1);
         }
-        // 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
         cal.setFirstDayOfWeek(Calendar.MONDAY);
-        // 获得当前日期是一个星期的第几天
         int day = cal.get(Calendar.DAY_OF_WEEK);
-        // 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
         cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
         Long imptimeBegin = cal.getTime().getTime();
         cal.add(Calendar.DATE, 6);
@@ -229,6 +307,15 @@ public class SchedulePageFragment extends BasePageTitleFragment {
             weekCount = Integer.parseInt(str1);
             startTime = str3;
         }
+    }
+
+    /**
+     * Toast提示
+     *
+     * @param msg 内容
+     */
+    private void showMsg(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
 }

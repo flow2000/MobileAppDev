@@ -69,7 +69,6 @@ public class DBAdapter {
     }
 
     public long insert(Schedule schedule) {
-        System.out.println(DB_CREATE);
         ContentValues scheduleValues = new ContentValues();
         scheduleValues.put(NAME, schedule.getScheduleName());
         scheduleValues.put(WEEK, schedule.getScheduleWeek());

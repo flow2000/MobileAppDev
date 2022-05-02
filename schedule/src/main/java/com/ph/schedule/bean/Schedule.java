@@ -125,7 +125,7 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return "Schedule{" +
+        return "{" +
                 "scheduleId=" + scheduleId +
                 ", scheduleName='" + scheduleName + '\'' +
                 ", scheduleWeek='" + scheduleWeek + '\'' +
