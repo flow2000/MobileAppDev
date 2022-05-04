@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.ph.schedule.AddScheduleActivity;
+import com.ph.schedule.MainActivity;
 import com.ph.schedule.R;
 import com.ph.schedule.adapter.DBAdapter;
 import com.ph.schedule.bean.Schedule;
@@ -30,8 +31,6 @@ import java.util.Map;
 public class SchedulePageFragment extends BasePageTitleFragment {
 
     private View mFragmentView;
-
-    private static final Integer ADD_CODE = 8848;
 
     private static Integer currentWeek = 1;
     private static Integer weekCount = 20;
@@ -71,6 +70,8 @@ public class SchedulePageFragment extends BasePageTitleFragment {
     private List<Schedule> scheduleList = new ArrayList<>();
     private static TextView textView = null;
     private GridLayout gridLayout;
+
+    private static final int ADD_CODE = 7858;
 
     public SchedulePageFragment(Integer currentWeek, Integer weekCount, String startTime) {
         super();
@@ -152,6 +153,7 @@ public class SchedulePageFragment extends BasePageTitleFragment {
                         } catch (Exception e) {
                             continue;
                         }
+                        int w = j;
                         textView = gridLayout.findViewById(currentId);
                         textView.setOnClickListener(view -> {
                             if (view.getId() != lastId) {
@@ -167,8 +169,12 @@ public class SchedulePageFragment extends BasePageTitleFragment {
                                 lastId = view.getId();
                             } else {
                                 Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
-                                intent.putExtra("schedule", s.toString());
-                                startActivityForResult(intent, ADD_CODE);
+                                Schedule schedule = new Schedule();
+                                schedule.setScheduleWeek(w);
+                                schedule.setStartWeek(1);
+                                schedule.setEndWeek(15);
+                                intent.putExtra("schedule", schedule.toString());
+                                startActivity(intent);
                                 setTransparent(view.getId());
                             }
                         });
@@ -205,7 +211,15 @@ public class SchedulePageFragment extends BasePageTitleFragment {
                 .setPositiveButton("编辑", (dialog, which) -> {
                     Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
                     intent.putExtra("schedule", s.toString());
-                    startActivityForResult(intent, ADD_CODE);
+                    startActivity(intent);
+                })
+                .setNeutralButton("删除", (dialog, which) -> {
+                    dbAdapter.deleteOne(s.getScheduleId());
+                    showMsg("删除成功");
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("add", ADD_CODE);
+                    startActivity(intent);
+                    setSchedule();
                 })
                 .setNegativeButton("关闭", (dialog, which) -> {
                 })
@@ -252,21 +266,6 @@ public class SchedulePageFragment extends BasePageTitleFragment {
                 t.setTextColor(Color.parseColor("#4C93DA"));
             }
         }
-    }
-
-    /**
-     * 返回Activity结果
-     *
-     * @param requestCode 请求码
-     * @param resultCode  结果码
-     * @param data        数据
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Intent intent = getActivity().getIntent();
-        String json = intent.getStringExtra("schedule");
-        setSchedule();
     }
 
     /**

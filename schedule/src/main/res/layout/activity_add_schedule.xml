@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -139,8 +140,8 @@
             android:layout_toRightOf="@+id/tv_price"
             android:background="@drawable/editext_selector"
             android:gravity="left|center"
-            android:inputType="text"
             android:hint="必填"
+            android:inputType="text"
             android:maxLength="18"
             android:textColor="@color/black"
             android:textColorHint="@color/grey"
@@ -164,24 +165,14 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <EditText
+        <Spinner
             android:id="@+id/schedule_time"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toRightOf="@+id/time"
-            android:background="@drawable/editext_selector"
-            android:focusable="false"
-            android:gravity="left|center"
-            android:hint="必填"
-            android:inputType="text"
-            android:maxLength="18"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            android:textCursorDrawable="@drawable/text_cursor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/time" />
 
     </RelativeLayout>
 
@@ -200,25 +191,33 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/schedule_week"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toRightOf="@+id/week"
-            android:background="@drawable/editext_selector"
-            android:gravity="left|center"
-            android:focusable="false"
-            android:hint="必填"
-            android:inputType="text"
-            android:maxLength="18"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            android:textCursorDrawable="@drawable/text_cursor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <Spinner
+            android:id="@+id/start_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/week" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/end_week"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="-2dp"
+
+            android:layout_toEndOf="@+id/start_week"
+            android:text="-" />
+
+        <Spinner
+            android:id="@+id/end_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="58dp"
+            android:layout_marginTop="21dp"
+            android:layout_toEndOf="@+id/start_week" />
 
     </RelativeLayout>
 

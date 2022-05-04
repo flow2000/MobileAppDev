@@ -1,6 +1,8 @@
 package com.ph.schedule;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -30,14 +32,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     //初始化fragment
     private HomePageFragment mHomePageFragment;
     private SchedulePageFragment mSchedulePageFragment;
-    private SettingsPageFragment mSettingsPageFragment;
+//    private SettingsPageFragment mSettingsPageFragment;
 
     //片段类容
     private FrameLayout mFlFragmentContent;
     //底部3个按钮
     private RelativeLayout mRlFirstLayout;
     private RelativeLayout mRlThirdLayout;
-    private RelativeLayout mRlFourLayout;
+//    private RelativeLayout mRlFourLayout;
 
     private ImageView mIvFirstHome;
     private TextView mTvFirstHome;
@@ -54,19 +56,31 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static Integer currentWeek = 1;
     private static Integer weekCount = 20;
     private static String startTime = "3/11";
-
-    private static Context instance;
+    private static final int ADD_CODE = 7858;
+    private static final int RETURN_CODE = 7859;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFragmentManager = getSupportFragmentManager();
-        instance = getApplicationContext();
         initView(); // 初始化视图
         readConfig(); // 读取配置
         readJsonData(); // 读取json数据
         readSQLite(); // 读取数据库数据
+        Intent intent = getIntent();
+        int add_code = intent.getIntExtra("add", 0);
+        int return_code = intent.getIntExtra("return", 1);
+        if (add_code == ADD_CODE || return_code == RETURN_CODE) {
+            mTransaction = mFragmentManager.beginTransaction(); //开启事务
+            hideAllFragment(mTransaction);
+            selected();
+            mRlThirdLayout.setSelected(true);
+            mSchedulePageFragment = new SchedulePageFragment(currentWeek, weekCount, startTime);
+            mTransaction.add(R.id.fl_fragment_content, mSchedulePageFragment);    //通过事务将内容添加到内容页
+            mTransaction.commit();
+        }
+
     }
 
     /**
@@ -133,14 +147,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mRlThirdLayout = (RelativeLayout) findViewById(R.id.rl_third_layout);
         mIvThirdRecommend = (ImageView) findViewById(R.id.iv_third_recommend);
         mTvThirdRecommend = (TextView) findViewById(R.id.tv_third_recommend);
-        mRlFourLayout = (RelativeLayout) findViewById(R.id.rl_four_layout);
-        mIvFourMine = (ImageView) findViewById(R.id.iv_four_mine);
-        mTvFourMine = (TextView) findViewById(R.id.tv_four_mine);
+//        mRlFourLayout = (RelativeLayout) findViewById(R.id.rl_four_layout);
+//        mIvFourMine = (ImageView) findViewById(R.id.iv_four_mine);
+//        mTvFourMine = (TextView) findViewById(R.id.tv_four_mine);
 
         //给五个按钮设置监听器
         mRlFirstLayout.setOnClickListener(this);
         mRlThirdLayout.setOnClickListener(this);
-        mRlFourLayout.setOnClickListener(this);
+//        mRlFourLayout.setOnClickListener(this);
         //默认第一个首页被选中高亮显示
         mRlFirstLayout.setSelected(true);
         mTransaction = mFragmentManager.beginTransaction();
@@ -148,6 +162,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mTransaction.commit();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         mTransaction = mFragmentManager.beginTransaction(); //开启事务
@@ -168,12 +183,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mTransaction.add(R.id.fl_fragment_content, mSchedulePageFragment);    //通过事务将内容添加到内容页
                 break;
             //设置
-            case R.id.rl_four_layout:
-                selected();
-                mRlFourLayout.setSelected(true);
-                mSettingsPageFragment = new SettingsPageFragment(currentWeek, weekCount, startTime);
-                mTransaction.add(R.id.fl_fragment_content, mSettingsPageFragment);    //通过事务将内容添加到内容页
-                break;
+//            case R.id.rl_four_layout:
+//                selected();
+//                mRlFourLayout.setSelected(true);
+//                mSettingsPageFragment = new SettingsPageFragment(currentWeek, weekCount, startTime);
+//                mTransaction.add(R.id.fl_fragment_content, mSettingsPageFragment);    //通过事务将内容添加到内容页
+//                break;
         }
         mTransaction.commit();
     }
@@ -182,7 +197,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void selected() {
         mRlFirstLayout.setSelected(false);
         mRlThirdLayout.setSelected(false);
-        mRlFourLayout.setSelected(false);
+//        mRlFourLayout.setSelected(false);
     }
 
     //删除所有fragmtne
@@ -193,9 +208,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (mSchedulePageFragment != null) {
             transaction.hide(mSchedulePageFragment);
         }
-        if (mSettingsPageFragment != null) {
-            transaction.hide(mSettingsPageFragment);
-        }
+//        if (mSettingsPageFragment != null) {
+//            transaction.hide(mSettingsPageFragment);
+//        }
     }
 
     /**
