@@ -270,6 +270,8 @@ public class SchedulePageFragment extends BasePageTitleFragment {
 
     /**
      * 根据当前日期获得所在周的日期区间（周一和周日日期）
+     * 例如：今天是6.2
+     * 则返回[5.30的时间戳,5.31的时间戳,6.1的时间戳,6.2的时间戳,6.2的时间戳,6.3的时间戳,6.4的时间戳]
      */
     private static Long[] getTimeInterval(Date date) {
         Calendar cal = Calendar.getInstance();
