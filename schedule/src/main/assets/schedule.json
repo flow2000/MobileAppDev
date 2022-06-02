@@ -8,7 +8,7 @@
     "startWeek": 1,
     "endWeek": 15,
     "address": "学友楼402",
-    "teacher": "周卫"
+    "teacher": "张三"
   },
   {
     "scheduleId": 2,
@@ -19,7 +19,7 @@
     "startWeek": 1,
     "endWeek": 10,
     "address": "学友楼402",
-    "teacher": "刘美玲"
+    "teacher": "王五"
   },
   {
     "scheduleId": 3,
@@ -30,7 +30,7 @@
     "startWeek": 1,
     "endWeek": 15,
     "address": "学友楼401",
-    "teacher": "张纲强"
+    "teacher": "李四"
   },
   {
     "scheduleId": 4,
@@ -41,7 +41,7 @@
     "startWeek": 1,
     "endWeek": 15,
     "address": "学友楼402",
-    "teacher": "王哲"
+    "teacher": "赵六"
   },
   {
     "scheduleId": 5,
@@ -52,7 +52,7 @@
     "startWeek": 6,
     "endWeek": 13,
     "address": "学友楼104",
-    "teacher": "邬佳颖"
+    "teacher": "孙七"
   },
   {
     "scheduleId": 6,
@@ -63,7 +63,7 @@
     "startWeek": 1,
     "endWeek": 11,
     "address": "逸夫楼607",
-    "teacher": "张纲强"
+    "teacher": "李四"
   },
   {
     "scheduleId": 7,
@@ -74,7 +74,7 @@
     "startWeek": 2,
     "endWeek": 15,
     "address": "博达楼112",
-    "teacher": "王哲"
+    "teacher": "赵六"
   },
   {
     "scheduleId": 8,
@@ -85,7 +85,7 @@
     "startWeek": 1,
     "endWeek": 10,
     "address": "学友楼402",
-    "teacher": "刘美玲"
+    "teacher": "王五"
   },
   {
     "scheduleId": 9,
@@ -96,7 +96,7 @@
     "startWeek": 1,
     "endWeek": 7,
     "address": "逸夫楼607",
-    "teacher": "张纲强"
+    "teacher": "李四"
   },
   {
     "scheduleId": 10,
@@ -107,7 +107,7 @@
     "startWeek": 1,
     "endWeek": 15,
     "address": "逸夫楼604",
-    "teacher": "周卫"
+    "teacher": "张三"
   },
   {
     "scheduleId": 11,
@@ -118,6 +118,6 @@
     "startWeek": 1,
     "endWeek": 13,
     "address": "逸夫楼607",
-    "teacher": "张纲强"
+    "teacher": "李四"
   }
 ]
